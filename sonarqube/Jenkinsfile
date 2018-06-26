@@ -1,13 +1,13 @@
 node {
-    def myGradleContainer = docker.image('gradle:jdk8-alpine')
+    def myGradleContainer = docker.image('gradle:jdk8')
     myGradleContainer.pull()
 
     stage('prep') {
-        git url: 'https://github.com/wardviaene/gs-gradle.git'
+        git url: 'https://github.com/allioli/gs-gradle.git'
     }
 
     stage('build') {
-      myGradleContainer.inside("-v ${env.HOME}/.gradle:/home/gradle/.gradle") {
+      myGradleContainer.inside() {
         sh 'cd complete && ./gradlew build'
       }
     }
